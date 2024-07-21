@@ -65,3 +65,14 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+task copyGitSubmodule(type: Copy) {
+    from './server_config'
+    include '*.yml'
+    into './src/main/resources'
+}
+
+// plan jar 생성 방지
+jar {
+    enabled = false
+}
