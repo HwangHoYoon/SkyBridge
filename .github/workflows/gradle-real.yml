@@ -48,5 +48,5 @@ jobs:
           docker stop be-con || true
           docker rm -f be-con || true
           docker rmi $(docker images -f "dangling=true" -q) || true
-          docker pull ${{ secrets.DOCKER_REPO }}/llm2docker:latest
+          docker pull ${{ secrets.DOCKER_REPO }}/skybridgedocker:latest
           docker run -v /var/log/service:/var/log/service -v /var/upload:/var/upload --name be-con -p 8080:8080 -d --restart unless-stopped ${{ secrets.DOCKER_REPO }}/skybridgedocker:latest
