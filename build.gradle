@@ -67,7 +67,7 @@ tasks.named('test') {
 }
 
 task copyGitSubmodule(type: Copy) {
-    from './server_config'
+    from './Skybridge_config'
     include '*.yml'
     into './src/main/resources'
 }
