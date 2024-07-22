@@ -66,10 +66,14 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-task copyGitSubmodule(type: Copy) {
+tasks.register('copyGitSubmodule', Copy) {
     from './Skybridge_config'
     include '*.yml'
     into './src/main/resources'
+}
+
+processResources {
+    dependsOn copyGitSubmodule
 }
 
 // plan jar 생성 방지
