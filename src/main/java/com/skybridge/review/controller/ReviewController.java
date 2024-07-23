@@ -17,12 +17,12 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping("/review")
+/*    @GetMapping("/review")
     public void review() {
 
         reviewService.review();
 
 
-    }
+    }*/
 
 }

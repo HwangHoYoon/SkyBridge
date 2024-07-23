@@ -33,8 +33,8 @@ public class RequestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        //chain.doFilter(request, response);
-        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        chain.doFilter(request, response);
+        /*ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
 
         if (multipartResolver.isMultipart((HttpServletRequest) request)) {
             // 멀티파트 요청으로부터 MultipartHttpServletRequest 획득
@@ -52,16 +52,17 @@ public class RequestFilter implements Filter {
         CustomRequestWrapper customRequestWrapper = new CustomRequestWrapper(requestWrapper);
 
         HttpServletResponseWrapper responseWrapper;
-        if ("text/event-stream".equals(((HttpServletRequest) request).getHeader("Accept"))) {
-            responseWrapper = new CustomHttpServletResponseWrapper((HttpServletResponse) response);
-
+        String responseBody = "";
+        int status = 0;
+        if (!customRequestWrapper.getRequestURI().contains("/chat/chat")) {
+            //responseWrapper = new CustomHttpServletResponseWrapper((HttpServletResponse) response);
+            responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+            responseBody = getResponseBody(responseWrapper);
+            status = responseWrapper.getStatus();
+            chain.doFilter(customRequestWrapper, responseWrapper);
         } else {
-           responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+            chain.doFilter(customRequestWrapper, response);
         }
-
-        chain.doFilter(customRequestWrapper, responseWrapper);
-        String responseBody = getResponseBody(responseWrapper);
-        int status = responseWrapper.getStatus();
 
         long start = System.currentTimeMillis();
         long end = System.currentTimeMillis();
@@ -95,8 +96,8 @@ public class RequestFilter implements Filter {
                         buildAccessLog(customRequestWrapper));
             }
         } else {
-            log.info("[REQUEST] {} - {} {} - {}", ((HttpServletRequest) customRequestWrapper).getMethod(), ((HttpServletRequest) customRequestWrapper).getRequestURI(), responseWrapper.getStatus(), (end - start) / 1000.0);
-        }
+            log.info("[REQUEST] {} - {} {} - {}", ((HttpServletRequest) customRequestWrapper).getMethod(), ((HttpServletRequest) customRequestWrapper).getRequestURI(), status, (end - start) / 1000.0);
+        }*/
     }
 
     private Map<String, String> getHeaders(HttpServletRequest request) {
