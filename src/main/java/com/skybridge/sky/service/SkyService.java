@@ -56,7 +56,7 @@ public class SkyService {
         //  img.src = 'data:image/jpeg;base64,' + base64Image;
         Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
         SkyRes skyRes = new SkyRes();
-        skyRes.setTeacherImage(domain + "image/" + teacher.getId());
+        skyRes.setTeacherImage(domain + "sky/" + "image/" + teacher.getId());
         skyRes.setPlanText(responseData);
         skyRes.setSubject(subject);
 

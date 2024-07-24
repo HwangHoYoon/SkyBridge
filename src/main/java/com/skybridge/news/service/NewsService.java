@@ -49,6 +49,7 @@ public class NewsService {
                 LocalDate currentDate = admNew.getRegDate();
                 String regDateText = currentDate.getYear() + "." + currentDate.getMonthValue() + "." + currentDate.getDayOfMonth();
                 NewsRes newsRes = new NewsRes();
+                newsRes.setId(admNew.getId());
                 newsRes.setNewsName(admNew.getNewsName());
                 newsRes.setNewsLink(admNew.getNewsLink());
                 /*try {
