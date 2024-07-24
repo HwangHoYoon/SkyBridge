@@ -54,8 +54,8 @@ public class NewsService {
     }
 
     public String encodeImageToBase64(String imagePath) throws IOException {
-        Resource resource = new ClassPathResource(imagePath);
-        byte[] imageBytes = Files.readAllBytes(Paths.get(resource.getURI()));
+        //Resource resource = new ClassPathResource(imagePath);
+        byte[] imageBytes = Files.readAllBytes(Paths.get(imagePath));
         return Base64.getEncoder().encodeToString(imageBytes);
     }
 }

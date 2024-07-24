@@ -59,8 +59,8 @@ public class SkyService {
 
     private String teacherImage(String subject) throws IOException {
         Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
-        Resource resource = new ClassPathResource(teacher.getTeacherImage());
-        byte[] imageBytes = Files.readAllBytes(Paths.get(resource.getURI()));
+        //Resource resource = new ClassPathResource(teacher.getTeacherImage());
+        byte[] imageBytes = Files.readAllBytes(Paths.get(teacher.getTeacherImage()));
         return Base64.getEncoder().encodeToString(imageBytes);
     }
 
