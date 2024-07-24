@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class SkyRes {
     private String planText;
-    private String teacherUrl;
+    private String teacherImage;
+    private String subject;
 }
