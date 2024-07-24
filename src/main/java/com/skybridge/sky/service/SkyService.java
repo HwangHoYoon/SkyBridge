@@ -6,17 +6,16 @@ import com.skybridge.sky.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -60,11 +59,8 @@ public class SkyService {
 
     private String teacherImage(String subject) throws IOException {
         Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
-
-        Path imageLocation = Paths.get(teacher.getFilePath());
-        Path file = imageLocation.resolve(teacher.getFileName());
-
-        byte[] imageBytes = Files.readAllBytes(file);
+        Resource resource = new ClassPathResource(teacher.getTeacherImage());
+        byte[] imageBytes = Files.readAllBytes(Paths.get(resource.getURI()));
         return Base64.getEncoder().encodeToString(imageBytes);
     }
 

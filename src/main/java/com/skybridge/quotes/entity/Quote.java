@@ -1,4 +1,4 @@
-package com.skybridge.sky.entity;
+package com.skybridge.quotes.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,26 +10,23 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "teacher")
-public class Teacher {
+@Table(name = "quotes")
+public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
-    private String name;
+    @Column(name = "quote", nullable = false, length = Integer.MAX_VALUE)
+    private String quote;
 
     @NotNull
-    @Column(name = "subject", nullable = false, length = Integer.MAX_VALUE)
-    private String subject;
+    @Column(name = "author", nullable = false, length = Integer.MAX_VALUE)
+    private String author;
 
     @NotNull
     @Column(name = "reg_date", nullable = false)
     private LocalDate regDate;
-
-    @Column(name = "teacher_image", length = Integer.MAX_VALUE)
-    private String teacherImage;
 
 }
