@@ -3,6 +3,7 @@ package com.skybridge.schedule.controller;
 import com.skybridge.quotes.dto.QuotesRes;
 import com.skybridge.schedule.dto.ScheduleRes;
 import com.skybridge.schedule.service.ScheduleService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping(value = "/schedule")
+    @Operation(summary = "명언", description = "명언")
     public ResponseEntity<List<ScheduleRes>> schedule() {
         return scheduleService.schedule();
     }

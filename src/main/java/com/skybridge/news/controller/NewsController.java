@@ -24,6 +24,7 @@ public class NewsController {
     private final NewsService newsService;
 
     @GetMapping(value = "/news")
+    @Operation(summary = "뉴스", description = "뉴스")
     public ResponseEntity<List<NewsRes>> news() {
         return newsService.news();
     }

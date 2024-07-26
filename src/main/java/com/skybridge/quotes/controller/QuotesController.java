@@ -2,6 +2,7 @@ package com.skybridge.quotes.controller;
 
 import com.skybridge.quotes.dto.QuotesRes;
 import com.skybridge.quotes.service.QuotesService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ public class QuotesController {
     private final QuotesService quotesService;
 
     @GetMapping(value = "/quotes")
+    @Operation(summary = "명언", description = "명언")
     public ResponseEntity<List<QuotesRes>> quotes() {
         return quotesService.quotes();
     }

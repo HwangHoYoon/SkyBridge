@@ -3,6 +3,7 @@ package com.skybridge.data.controller;
 import com.skybridge.data.dto.DataRes;
 import com.skybridge.data.service.DataService;
 import com.skybridge.quotes.dto.QuotesRes;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ public class DataController {
     private final DataService dataService;
 
     @GetMapping(value = "/data")
+    @Operation(summary = "입시자료", description = "입시자료")
     public ResponseEntity<List<DataRes>> data() {
         return dataService.data();
     }
