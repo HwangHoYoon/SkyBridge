@@ -60,6 +60,9 @@ dependencies {
 
     implementation 'com.microsoft.playwright:playwright:1.45.0'
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
 }
 
 tasks.named('test') {
