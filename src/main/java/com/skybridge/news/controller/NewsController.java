@@ -23,13 +23,14 @@ import java.util.List;
 public class NewsController {
     private final NewsService newsService;
 
-    @GetMapping(value = "/news")
+    @GetMapping({"/news", "/news/{sort}"})
     @Operation(summary = "뉴스", description = "뉴스")
-    public ResponseEntity<List<NewsRes>> news() {
-        return newsService.news();
+    public ResponseEntity<List<NewsRes>> news(@PathVariable(value = "sort", required = false) String sort) {
+        return newsService.news(sort);
     }
 
     @GetMapping("/image/{id}")
+
     @Operation(summary = "뉴스 이미지 조회", description = "이미지 조회")
     public ResponseEntity<Resource>  loadImage(@PathVariable("id") String id) {
         return newsService.loadImage(id);

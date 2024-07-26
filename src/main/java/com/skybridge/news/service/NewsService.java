@@ -5,12 +5,10 @@ import com.skybridge.common.exception.CommonException;
 import com.skybridge.news.dto.NewsRes;
 import com.skybridge.news.entity.AdmNew;
 import com.skybridge.news.repository.AdmNewRepository;
-import com.skybridge.sky.entity.Teacher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
@@ -38,11 +36,15 @@ public class NewsService {
     @Value("${domain}")
     private String domain;
 
-    public ResponseEntity<List<NewsRes>> news() {
+    public ResponseEntity<List<NewsRes>> news(String sort) {
         List<NewsRes> newsResList = new ArrayList<>();
-
-        Sort sort = Sort.by("viewCount").ascending();
-        List<AdmNew> admNewList = admNewRepository.findAll(sort);
+        Sort sortColumn;
+        if (StringUtils.equals("1", sort)) {
+            sortColumn = Sort.by("regDate").descending();
+        } else {
+            sortColumn = Sort.by("viewCount").descending();
+        }
+        List<AdmNew> admNewList = admNewRepository.findAll(sortColumn);
 
         if (!admNewList.isEmpty()) {
             admNewList.forEach(admNew -> {
