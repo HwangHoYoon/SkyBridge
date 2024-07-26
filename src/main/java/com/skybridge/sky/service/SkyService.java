@@ -80,9 +80,8 @@ public class SkyService {
         apiLogService.saveLog(apiLogReq);
 
         //String responseData = "{\"intro\": {\"contents\" : [\"영어 1등급이라니 정말 대단한데! 서울대학교에 합격하기 위해서는 조금 더 노력해야 할 수도 있어. 내가 도와줄게!\"]},\"1\": {\"date\": [2024.8, 2025.4], \"title\": \"고급 영단어 암기\", \"contents\" : [\"서울대학교 수준에 맞는 고급 영단어를 암기합니다.\"]},\"2\": {\"date\": [2025.5, 2025.10], \"title\": \"심화 영문법 학습 및 문제 풀이\", \"contents\" : [\"더욱 심화된 영문법을 학습하며 다양한 문제를 풀어봅니다.\"]},\"3\": {\"date\": [2025.11, 2026.5], \"title\": \"영어 논문 읽기와 에세이 작성\", \"contents\" : [\"수준 높은 영어 논문을 읽으며 독해력을 기릅니다.\",\"이를 바탕으로 영어 에세이를 작성하며 작문 실력을 키웁니다.\"]},\"4\": {\"date\": [2026.6, 2026.11], \"title\": \"모의고사 연습 및 실전 대비\", \"contents\" : [\"실제 수능과 유사한 모의고사를 풀면서 시간 분배와 문제 해결 능력을 익힙니다.\"]},\"5\": {\"date\": [2026.12, 2027.5], \"title\": \"영어 토론 및 발표 연습\", \"contents\" : [\"영어로 토론하고 발표하는 연습을 하면서 회화 실력과 자신감을 높입니다.\"]},\"6\": {\"date\": [2027.6, 2028.11], \"title\": \"최종 마무리\", \"contents\" : [\"지금까지 학습한 내용을 복습하면서 부족한 부분을 보완합니다.\",\"최근 3개년 수능 기출문제를 다시 한 번 분석하여 출제 경향을 파악합니다.\"]},\"outro\": {\"contents\" : [\"이렇게 체계적으로 공부하면 서울대학교에 합격할 수 있을 거야. 물론 쉽지 않겠지만, 너의 노력과 열정이라면 충분히 해낼 수 있어! 응원할게\"]}}";
-        StudyPlanWrapper studyPlan = jsonPassing(responseData, StudyPlanWrapper.class);
-        log.info("sykAi api Received all data: {}", studyPlan);
         log.info("sykAi api Received all data: {}", responseData);
+        StudyPlanWrapper studyPlan = jsonPassing(responseData, StudyPlanWrapper.class);
 
         SkyResult skyResult = new SkyResult();
         skyResult.setYear(year);

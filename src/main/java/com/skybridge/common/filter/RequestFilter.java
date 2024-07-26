@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,12 +31,14 @@ public class RequestFilter implements Filter {
 
     private final MultipartResolver multipartResolver;
 
+    @Value("${web.filter.url}")
+    private String[] urls;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        chain.doFilter(request, response);
-        /*ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
+        //chain.doFilter(request, response);
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
 
         if (multipartResolver.isMultipart((HttpServletRequest) request)) {
             // 멀티파트 요청으로부터 MultipartHttpServletRequest 획득
@@ -54,12 +58,14 @@ public class RequestFilter implements Filter {
         HttpServletResponseWrapper responseWrapper;
         String responseBody = "";
         int status = 0;
-        if (!customRequestWrapper.getRequestURI().contains("/chat/chat")) {
+
+        if (Arrays.stream(urls).noneMatch(customRequestWrapper.getRequestURI()::contains)) {
             //responseWrapper = new CustomHttpServletResponseWrapper((HttpServletResponse) response);
             responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) response);
+            chain.doFilter(customRequestWrapper, responseWrapper);
+
             responseBody = getResponseBody(responseWrapper);
             status = responseWrapper.getStatus();
-            chain.doFilter(customRequestWrapper, responseWrapper);
         } else {
             chain.doFilter(customRequestWrapper, response);
         }
@@ -68,12 +74,11 @@ public class RequestFilter implements Filter {
         long end = System.currentTimeMillis();
 
         if (!customRequestWrapper.getRequestURI().contains("/api-docs/") && !customRequestWrapper.getRequestURI().contains("/swagger-ui/")) {
-            if (!customRequestWrapper.getRequestURI().contains("/image/")) {
+            if (Arrays.stream(urls).noneMatch(customRequestWrapper.getRequestURI()::contains)) {
                 log.info("\n" +
                                 "[REQUEST] {} - {} {} - {}\n" +
                                 "Headers : {}\n" +
                                 "Request : {}\n" +
-                                //"Headers : {}\n" +
                                 "Response : {}\n",
                         ((HttpServletRequest) customRequestWrapper).getMethod(),
                         ((HttpServletRequest) customRequestWrapper).getRequestURI(),
@@ -81,7 +86,6 @@ public class RequestFilter implements Filter {
                         (end - start) / 1000.0,
                         getHeaders(customRequestWrapper),
                         buildAccessLog(customRequestWrapper),
-                        //getHeaders(responseWrapper),
                         responseBody);
             } else {
                 log.info("\n" +
@@ -97,7 +101,7 @@ public class RequestFilter implements Filter {
             }
         } else {
             log.info("[REQUEST] {} - {} {} - {}", ((HttpServletRequest) customRequestWrapper).getMethod(), ((HttpServletRequest) customRequestWrapper).getRequestURI(), status, (end - start) / 1000.0);
-        }*/
+        }
     }
 
     private Map<String, String> getHeaders(HttpServletRequest request) {

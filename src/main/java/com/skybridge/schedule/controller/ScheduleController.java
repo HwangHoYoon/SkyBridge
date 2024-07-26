@@ -24,7 +24,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @GetMapping(value = "/schedule")
-    @Operation(summary = "명언", description = "명언")
+    @Operation(summary = "입시일정", description = "입시일정")
     public ResponseEntity<List<ScheduleRes>> schedule() {
         return scheduleService.schedule();
     }
