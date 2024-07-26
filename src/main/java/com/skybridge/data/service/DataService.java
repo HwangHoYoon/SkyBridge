@@ -27,6 +27,7 @@ public class DataService {
                 DataRes dataRes = new DataRes();
                 dataRes.setId(admDatum.getId());
                 dataRes.setDataName(admDatum.getDataName());
+                dataRes.setDataLink(admDatum.getDataLink());
                 dataRes.setViewCount(admDatum.getViewCount());
                 dataResList.add(dataRes);
             });

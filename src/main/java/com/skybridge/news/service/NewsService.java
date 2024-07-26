@@ -52,6 +52,7 @@ public class NewsService {
                 newsRes.setId(admNew.getId());
                 newsRes.setNewsName(admNew.getNewsName());
                 newsRes.setNewsLink(admNew.getNewsLink());
+                newsRes.setNewsType(admNew.getNewsType());
                 /*try {
                     newsRes.setNewsImage(encodeImageToBase64(admNew.getNewsImage()));
                 } catch (IOException e) {

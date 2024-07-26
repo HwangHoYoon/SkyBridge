@@ -25,6 +25,9 @@ public class NewsRes {
     @Schema(description = "newsImage", example = "abcd", name = "newsImage")
     private String newsImage;
 
+    @Schema(description = "newsType", example = "정시", name = "newsType")
+    private String newsType;
+    
     @Schema(description = "viewCount", example = "3000", name = "viewCount")
     private Long viewCount;
 

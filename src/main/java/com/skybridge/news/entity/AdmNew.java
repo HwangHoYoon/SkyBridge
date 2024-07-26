@@ -28,6 +28,9 @@ public class AdmNew {
     @Column(name = "news_image", length = Integer.MAX_VALUE)
     private String newsImage;
 
+    @Column(name = "news_type", length = Integer.MAX_VALUE)
+    private String newsType;
+
     @NotNull
     @ColumnDefault("0")
     @Column(name = "view_count", nullable = false)

@@ -23,6 +23,10 @@ public class AdmDatum {
     private String dataName;
 
     @NotNull
+    @Column(name = "data_link", nullable = false, length = Integer.MAX_VALUE)
+    private String dataLink;
+
+    @NotNull
     @ColumnDefault("0")
     @Column(name = "view_count", nullable = false)
     private Long viewCount;
