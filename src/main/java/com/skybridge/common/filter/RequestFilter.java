@@ -73,7 +73,7 @@ public class RequestFilter implements Filter {
         long start = System.currentTimeMillis();
         long end = System.currentTimeMillis();
 
-        if (!customRequestWrapper.getRequestURI().contains("/api-docs/") && !customRequestWrapper.getRequestURI().contains("/swagger-ui/")) {
+        if (!customRequestWrapper.getRequestURI().contains("/api-docs/") && !customRequestWrapper.getRequestURI().contains("/swagger-ui/") && !customRequestWrapper.getRequestURI().contains("/actuator/prometheus")) {
             if (Arrays.stream(urls).noneMatch(customRequestWrapper.getRequestURI()::contains)) {
                 log.info("\n" +
                                 "[REQUEST] {} - {} {} - {}\n" +

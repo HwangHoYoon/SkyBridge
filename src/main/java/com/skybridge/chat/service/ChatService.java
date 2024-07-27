@@ -50,6 +50,12 @@ public class ChatService {
                     apiLogReq.setReqDate(LocalDate.now());
                     apiLogReq.setRes(collectedData.toString());
                     apiLogService.saveLog(apiLogReq);
+                }).map(data -> {
+                    data = data.replace("data:", "");
+                    if (data.contains("source:")) {
+                        data = "";
+                    }
+                    return data;
                 });
 
         return ResponseEntity.ok()
