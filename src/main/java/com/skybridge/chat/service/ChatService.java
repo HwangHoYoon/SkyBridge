@@ -56,11 +56,15 @@ public class ChatService {
                         data = "";
                     }
                     return data;
-                });
+                }).filter(data -> !isWhitespaceOnly(data));
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_EVENT_STREAM_VALUE)
                 .body(stringFlux);
 
+    }
+
+    private boolean isWhitespaceOnly(String data) {
+        return data.trim().isEmpty();
     }
 }

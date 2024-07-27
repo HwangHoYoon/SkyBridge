@@ -73,34 +73,36 @@ public class RequestFilter implements Filter {
         long start = System.currentTimeMillis();
         long end = System.currentTimeMillis();
 
-        if (!customRequestWrapper.getRequestURI().contains("/api-docs/") && !customRequestWrapper.getRequestURI().contains("/swagger-ui/") && !customRequestWrapper.getRequestURI().contains("/actuator/prometheus")) {
-            if (Arrays.stream(urls).noneMatch(customRequestWrapper.getRequestURI()::contains)) {
-                log.info("\n" +
-                                "[REQUEST] {} - {} {} - {}\n" +
-                                "Headers : {}\n" +
-                                "Request : {}\n" +
-                                "Response : {}\n",
-                        ((HttpServletRequest) customRequestWrapper).getMethod(),
-                        ((HttpServletRequest) customRequestWrapper).getRequestURI(),
-                        status,
-                        (end - start) / 1000.0,
-                        getHeaders(customRequestWrapper),
-                        buildAccessLog(customRequestWrapper),
-                        responseBody);
+        if (!customRequestWrapper.getRequestURI().contains("/actuator/prometheus")) {
+            if (!customRequestWrapper.getRequestURI().contains("/api-docs/") && !customRequestWrapper.getRequestURI().contains("/swagger-ui/")) {
+                if (Arrays.stream(urls).noneMatch(customRequestWrapper.getRequestURI()::contains)) {
+                    log.info("\n" +
+                                    "[REQUEST] {} - {} {} - {}\n" +
+                                    "Headers : {}\n" +
+                                    "Request : {}\n" +
+                                    "Response : {}\n",
+                            ((HttpServletRequest) customRequestWrapper).getMethod(),
+                            ((HttpServletRequest) customRequestWrapper).getRequestURI(),
+                            status,
+                            (end - start) / 1000.0,
+                            getHeaders(customRequestWrapper),
+                            buildAccessLog(customRequestWrapper),
+                            responseBody);
+                } else {
+                    log.info("\n" +
+                                    "[REQUEST] {} - {} {} - {}\n" +
+                                    "Headers : {}\n" +
+                                    "Request : {}\n" ,
+                            ((HttpServletRequest) customRequestWrapper).getMethod(),
+                            ((HttpServletRequest) customRequestWrapper).getRequestURI(),
+                            status,
+                            (end - start) / 1000.0,
+                            getHeaders(customRequestWrapper),
+                            buildAccessLog(customRequestWrapper));
+                }
             } else {
-                log.info("\n" +
-                                "[REQUEST] {} - {} {} - {}\n" +
-                                "Headers : {}\n" +
-                                "Request : {}\n" ,
-                        ((HttpServletRequest) customRequestWrapper).getMethod(),
-                        ((HttpServletRequest) customRequestWrapper).getRequestURI(),
-                        status,
-                        (end - start) / 1000.0,
-                        getHeaders(customRequestWrapper),
-                        buildAccessLog(customRequestWrapper));
+                log.info("[REQUEST] {} - {} {} - {}", ((HttpServletRequest) customRequestWrapper).getMethod(), ((HttpServletRequest) customRequestWrapper).getRequestURI(), status, (end - start) / 1000.0);
             }
-        } else {
-            log.info("[REQUEST] {} - {} {} - {}", ((HttpServletRequest) customRequestWrapper).getMethod(), ((HttpServletRequest) customRequestWrapper).getRequestURI(), status, (end - start) / 1000.0);
         }
     }
 
