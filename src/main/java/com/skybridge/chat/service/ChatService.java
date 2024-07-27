@@ -34,7 +34,7 @@ public class ChatService {
     private final ApiLogService apiLogService;
 
     public ResponseEntity<Flux<String>> chat(String content) {
-        String encodedString = Base64.getEncoder().encodeToString(content.getBytes());
+/*        String encodedString = Base64.getEncoder().encodeToString(content.getBytes());
         List<String> collectedData = new ArrayList<>();
         String url = base + chat + "/" + encodedString;
         log.info("chat api url : {}", url);
@@ -56,15 +56,40 @@ public class ChatService {
                         data = "";
                     }
                     return data;
-                }).filter(data -> !isWhitespaceOnly(data));
+                }).filter(data -> !isWhitespaceOnly(data));*/
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_EVENT_STREAM_VALUE)
-                .body(stringFlux);
-
+                .body(getStream(content));
     }
 
     private boolean isWhitespaceOnly(String data) {
         return data.trim().isEmpty();
+    }
+
+    private Flux<String> getStream(String content) {
+        String encodedString = Base64.getEncoder().encodeToString(content.getBytes());
+        List<String> collectedData = new ArrayList<>();
+        String url = base + chat + "/" + encodedString;
+        log.info("chat api url : {}", url);
+        return webClient.get()
+                .uri(url) // 스트리밍 엔드포인트
+                .retrieve()
+                .bodyToFlux(String.class)
+                .doOnNext(collectedData::add)
+                .doOnComplete(() -> {
+                    log.info("chat api Received all data: {}", collectedData);
+                    ApiLogReq apiLogReq = new ApiLogReq();
+                    apiLogReq.setUrl(url);
+                    apiLogReq.setReqDate(LocalDate.now());
+                    apiLogReq.setRes(collectedData.toString());
+                    apiLogService.saveLog(apiLogReq);
+                }).map(data -> {
+                    data = data.replace("data:", "");
+                    if (data.contains("source:")) {
+                        data = "";
+                    }
+                    return data;
+                }).filter(data -> !isWhitespaceOnly(data));
     }
 }
