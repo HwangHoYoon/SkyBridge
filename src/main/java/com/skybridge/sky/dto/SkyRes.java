@@ -11,9 +11,12 @@ public class SkyRes {
     @Schema(description = "planList", name = "planList")
     private List<SkyResultShortRes> planList;
 
-    @Schema(description = "teacherImage", example = "선생님 이미지", name = "teacherImage")
-    private String teacherImage;
+/*    @Schema(description = "teacherImage", example = "선생님 이미지", name = "teacherImage")
+    private String teacherImage;*/
 
+    @Schema(description = "teacherName", example = "선생님 이름", name = "teacherName")
+    private String teacherName;
+    
     @Schema(description = "resultId", example = "1", name = "resultId")
     private Long resultId;
 }

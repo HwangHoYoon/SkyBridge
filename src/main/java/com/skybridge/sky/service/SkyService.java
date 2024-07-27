@@ -111,7 +111,7 @@ public class SkyService {
 
         Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
         SkyRes skyRes = new SkyRes();
-        skyRes.setTeacherImage(domain + "sky/" + "image/" + teacher.getId());
+        skyRes.setTeacherName(teacher.getName());
         skyRes.setPlanList(skyResultShortResList);
         skyRes.setResultId(skyResult.getId());
 
@@ -123,8 +123,9 @@ public class SkyService {
         SkyResult result = skyResultService.getResult(resultId);
         String subject = result.getSubject();
         Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
-        String teacherImage = domain + "sky/" +"image/" + teacher.getId();
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE).body(teacherImage);
+        //String teacherImage = domain + "sky/" +"image/" + teacher.getId();
+        String teacherName = teacher.getName();
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE).body(teacherName);
     }
 
     private String teacherImage(String subject) throws IOException {

@@ -29,7 +29,7 @@ public class Teacher {
     @Column(name = "reg_date", nullable = false)
     private LocalDate regDate;
 
-    @Column(name = "teacher_image", length = Integer.MAX_VALUE)
+    @NotNull
+    @Column(name = "teacher_image", nullable = false, length = Integer.MAX_VALUE)
     private String teacherImage;
-
 }
