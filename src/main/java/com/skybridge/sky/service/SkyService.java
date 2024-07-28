@@ -61,6 +61,9 @@ public class SkyService {
         //String encodedSubject = Base64.getEncoder().encodeToString(subject.getBytes());
         //String encodedUniversity = Base64.getEncoder().encodeToString(university.getBytes());
         //String url = base + gooroom + "?year=" + year + "&subject=" + encodedSubject + "&grade=" + grade + "&university=" + encodedUniversity;
+        if (StringUtils.equals(grade, "3등급")) {
+            grade = "3";
+        }
 
         String url = base + gooroom + "?year=" + year + "&subject=" + subject + "&grade=" + grade + "&university=" + university;
 
@@ -75,26 +78,15 @@ public class SkyService {
         LocalDate localDate = LocalDate.now();
         ApiLogReq apiLogReq = new ApiLogReq();
         apiLogReq.setUrl(url);
+        apiLogReq.setReq("year=" + year + "&subject=" + subject + "&grade=" + grade + "&university=" + university);
         apiLogReq.setReqDate(localDate);
         apiLogReq.setRes(responseData);
         apiLogService.saveLog(apiLogReq);
 
         //String responseData = "{\"intro\": {\"contents\" : [\"영어 1등급이라니 정말 대단한데! 서울대학교에 합격하기 위해서는 조금 더 노력해야 할 수도 있어. 내가 도와줄게!\"]},\"1\": {\"date\": [2024.8, 2025.4], \"title\": \"고급 영단어 암기\", \"contents\" : [\"서울대학교 수준에 맞는 고급 영단어를 암기합니다.\"]},\"2\": {\"date\": [2025.5, 2025.10], \"title\": \"심화 영문법 학습 및 문제 풀이\", \"contents\" : [\"더욱 심화된 영문법을 학습하며 다양한 문제를 풀어봅니다.\"]},\"3\": {\"date\": [2025.11, 2026.5], \"title\": \"영어 논문 읽기와 에세이 작성\", \"contents\" : [\"수준 높은 영어 논문을 읽으며 독해력을 기릅니다.\",\"이를 바탕으로 영어 에세이를 작성하며 작문 실력을 키웁니다.\"]},\"4\": {\"date\": [2026.6, 2026.11], \"title\": \"모의고사 연습 및 실전 대비\", \"contents\" : [\"실제 수능과 유사한 모의고사를 풀면서 시간 분배와 문제 해결 능력을 익힙니다.\"]},\"5\": {\"date\": [2026.12, 2027.5], \"title\": \"영어 토론 및 발표 연습\", \"contents\" : [\"영어로 토론하고 발표하는 연습을 하면서 회화 실력과 자신감을 높입니다.\"]},\"6\": {\"date\": [2027.6, 2028.11], \"title\": \"최종 마무리\", \"contents\" : [\"지금까지 학습한 내용을 복습하면서 부족한 부분을 보완합니다.\",\"최근 3개년 수능 기출문제를 다시 한 번 분석하여 출제 경향을 파악합니다.\"]},\"outro\": {\"contents\" : [\"이렇게 체계적으로 공부하면 서울대학교에 합격할 수 있을 거야. 물론 쉽지 않겠지만, 너의 노력과 열정이라면 충분히 해낼 수 있어! 응원할게\"]}}";
         log.info("sykAi api Received all data: {}", responseData);
+        // sky ai 호출 후 매핑
         StudyPlanWrapper studyPlan = jsonPassing(responseData, StudyPlanWrapper.class);
-
-        SkyResult skyResult = new SkyResult();
-        skyResult.setYear(year);
-        skyResult.setSubject(subject);
-        skyResult.setGrade(grade);
-        skyResult.setUniversity(university);
-        skyResult.setResponse(responseData);
-        skyResult.setRegDate(localDate);
-        skyResultService.saveResult(skyResult);
-
-        //String base64Image = teacherImage(subject);
-        //  img.src = 'data:image/jpeg;base64,' + base64Image;
-
         List<SkyResultShortRes> skyResultShortResList = new ArrayList<>();
         if (studyPlan != null) {
             studyPlan.getPlans().forEach((key, plan) -> {
@@ -109,7 +101,23 @@ public class SkyService {
             });
         }
 
+        // 과목별 랜덤 선생님 호출
         Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
+
+        // 결과 저장
+        SkyResult skyResult = new SkyResult();
+        skyResult.setYear(year);
+        skyResult.setSubject(subject);
+        skyResult.setGrade(grade);
+        skyResult.setUniversity(university);
+        skyResult.setResponse(responseData);
+        skyResult.setRegDate(localDate);
+        skyResult.setTeacher(teacher);
+        skyResultService.saveResult(skyResult);
+
+        //String base64Image = teacherImage(subject);
+        //  img.src = 'data:image/jpeg;base64,' + base64Image;
+
         SkyRes skyRes = new SkyRes();
         skyRes.setTeacherName(teacher.getName());
         skyRes.setPlanList(skyResultShortResList);
@@ -118,11 +126,22 @@ public class SkyService {
         return ResponseEntity.ok().body(skyRes);
     }
 
+
+
+
     public ResponseEntity<String> reloadTeacher(Long resultId) {
         //String teacherImage = teacherImage(subject);
+        // 결과 화면에서 선생님 정보 확인
         SkyResult result = skyResultService.getResult(resultId);
         String subject = result.getSubject();
-        Teacher teacher = teacherRepository.findRandomTeacherBySubject(subject);
+        String name = result.getTeacher().getName();
+
+        // 해당 정보로 선생님 조회
+        Teacher teacher = teacherRepository.findRandomTeacherBySubjectNotEqName(subject, name);
+
+        result.setTeacher(teacher);
+        skyResultService.saveResult(result);
+
         //String teacherImage = domain + "sky/" +"image/" + teacher.getId();
         String teacherName = teacher.getName();
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE).body(teacherName);

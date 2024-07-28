@@ -59,7 +59,7 @@ public class ChatService {
                 }).filter(data -> !isWhitespaceOnly(data));*/
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_EVENT_STREAM_VALUE)
+                .contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(getStream(content));
     }
 
@@ -81,6 +81,7 @@ public class ChatService {
                     log.info("chat api Received all data: {}", collectedData);
                     ApiLogReq apiLogReq = new ApiLogReq();
                     apiLogReq.setUrl(url);
+                    apiLogReq.setReq(content);
                     apiLogReq.setReqDate(LocalDate.now());
                     apiLogReq.setRes(collectedData.toString());
                     apiLogService.saveLog(apiLogReq);

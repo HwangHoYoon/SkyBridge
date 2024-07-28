@@ -36,4 +36,8 @@ public class SkyResult {
     @Column(name = "response", length = Integer.MAX_VALUE)
     private String response;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
 }
