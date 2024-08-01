@@ -3,8 +3,8 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
 
     <property name="LOG_PATH" value="/var/log/service/" />
-    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %clr(%5level) %cyan(%logger) - %msg%n" />
-    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5level %logger - %msg%n" />
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd} %d{HH:mm:ss} compose_service=%X{compose_service} trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} type=%X{type} [%thread] %clr(%5level) %cyan(%logger) - %msg%n" />
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd} %d{HH:mm:ss} compose_service=%X{compose_service} trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} type=%X{type} [%thread] %5level %logger - %msg%n" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -39,6 +39,15 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+
+    <!-- jdbc.sql Loggers -->
+    <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/>
+    <logger name="jdbc.connection" level="OFF"/>
 
     <springProfile name="local">
         <root level="INFO">
