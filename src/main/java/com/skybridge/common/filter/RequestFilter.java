@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +21,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -36,6 +35,10 @@ public class RequestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        final UUID uuid = UUID.randomUUID();
+        String requestId = ((HttpServletRequest)request).getHeader("X-RequestID");
+        MDC.put("trace_id", StringUtils.defaultIfEmpty(requestId, UUID.randomUUID().toString().replace("-", "")));
+        MDC.put("span_id", uuid.toString());
 
         //chain.doFilter(request, response);
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) request);
@@ -104,6 +107,7 @@ public class RequestFilter implements Filter {
                 log.info("[REQUEST] {} - {} {} - {}", ((HttpServletRequest) customRequestWrapper).getMethod(), ((HttpServletRequest) customRequestWrapper).getRequestURI(), status, (end - start) / 1000.0);
             }
         }
+        MDC.clear();
     }
 
     private Map<String, String> getHeaders(HttpServletRequest request) {
