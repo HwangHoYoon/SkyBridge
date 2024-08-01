@@ -3,8 +3,8 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
 
     <property name="LOG_PATH" value="/var/log/service/" />
-    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd} %d{HH:mm:ss} compose_service=%X{compose_service} trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} type=%X{type} [%thread] %clr(%5level) %cyan(%logger) --- %msg%n" />
-    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd} %d{HH:mm:ss} compose_service=%X{compose_service} trace_id=%X{trace_id} span_id=%X{span_id} trace_flags=%X{trace_flags} type=%X{type} [%thread] %5level %logger --- %msg%n" />
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd} %d{HH:mm:ss} trace_id=%X{trace_id} span_id=%X{span_id} [%thread] %clr(%5level) %cyan(%logger) --- %msg%n" />
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd} %d{HH:mm:ss} trace_id=%X{trace_id} span_id=%X{span_id} [%thread] %5level %logger --- %msg%n" />
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

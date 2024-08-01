@@ -19,11 +19,8 @@ public class LoggingFilter implements Filter {
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
         final UUID uuid = UUID.randomUUID();
         String requestId = ((HttpServletRequest)servletRequest).getHeader("X-RequestID");
-        MDC.put("compose_service", "app-skybridge-service");
         MDC.put("trace_id", StringUtils.defaultIfEmpty(requestId, UUID.randomUUID().toString().replace("-", "")));
         MDC.put("span_id", uuid.toString());
-        MDC.put("trace_flags", "01");
-        MDC.put("type", "request");
         filterChain.doFilter(servletRequest, servletResponse);
         MDC.clear();
     }
