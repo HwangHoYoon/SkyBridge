@@ -38,6 +38,10 @@ public class ReviewDetail {
     @Column(name = "tag", length = Integer.MAX_VALUE)
     private String tag;
 
+    @NotNull
+    @Column(name = "url", nullable = false, length = Integer.MAX_VALUE)
+    private String url;
+
     @Column(name = "reg_date")
     private LocalDate regDate;
 

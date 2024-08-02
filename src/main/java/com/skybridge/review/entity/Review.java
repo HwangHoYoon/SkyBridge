@@ -42,6 +42,10 @@ public class Review {
     private String tag;
 
     @NotNull
+    @Column(name = "url", nullable = false, length = Integer.MAX_VALUE)
+    private String url;
+
+    @NotNull
     @Column(name = "reg_date", nullable = false)
     private LocalDate regDate;
 

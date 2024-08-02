@@ -149,7 +149,9 @@ public class ReviewService {
                     String code = matcher.group(1);
 
                     Page newPage = context.newPage();
-                    newPage.navigate("https://www.jinhak.com/Lecture/Review/MiniHome/TeacherMiniHome.aspx?TeacherCode=" + code);
+                    String url = "https://www.jinhak.com/Lecture/Review/MiniHome/TeacherMiniHome.aspx?TeacherCode=" + code;
+                    review.setUrl(url);
+                    newPage.navigate(url);
                     newPage.waitForLoadState(LoadState.LOAD);
                     newPage.waitForLoadState(LoadState.DOMCONTENTLOADED);
                     newPage.waitForLoadState(LoadState.NETWORKIDLE);
@@ -184,6 +186,7 @@ public class ReviewService {
                         String spanRBadText = "";
                         String spanRGoodText = "";
                         String spanTagListText = "";
+                        String spanRegionNameText = "";
 
                         ElementHandle spanJobName = li.querySelector(".spanJobName");
                         if (spanJobName != null) {
@@ -195,9 +198,13 @@ public class ReviewService {
                             spanMajorNameText = spanMajorName.textContent();
                         }
 
-                        ElementHandle spanCalcScore = li.querySelector(".spanCalcScore");
-                        if (spanCalcScore != null) {
-                            spanCalcScoreNameText = spanCalcScore.textContent();
+                        ElementHandle spanRegionName = li.querySelector(".spanRegion");
+                        if (spanRegionName != null) {
+                            spanRegionNameText = spanRegionName.textContent();
+                        }
+                        ElementHandle spanCalcScoreName = li.querySelector(".spanCalcScore");
+                        if (spanCalcScoreName != null) {
+                            spanCalcScoreNameText = spanCalcScoreName.textContent();
                         }
 
                         ElementHandle spanRBad = li.querySelector(".rBad");
@@ -205,12 +212,12 @@ public class ReviewService {
                             spanRBadText = spanRBad.textContent();
                         }
 
-                        ElementHandle spanRGood = li.querySelector("rGood");
+                        ElementHandle spanRGood = li.querySelector(".rGood");
                         if (spanRGood != null) {
                             spanRGoodText = spanRGood.textContent();
                         }
 
-                        ElementHandle spanTagList = li.querySelector("TagList");
+                        ElementHandle spanTagList = li.querySelector(".TagList");
                         if (spanTagList != null) {
                             spanTagListText = spanTagList.textContent();
                         }
@@ -218,12 +225,14 @@ public class ReviewService {
                         ReviewDetail reviewDetail = new ReviewDetail();
                         reviewDetail.setJob(spanJobNameText);
                         reviewDetail.setMajor(spanMajorNameText);
+                        reviewDetail.setRegion(spanRegionNameText);
                         reviewDetail.setScore(spanCalcScoreNameText);
                         reviewDetail.setBad(spanRBadText);
                         reviewDetail.setGood(spanRGoodText);
                         reviewDetail.setTag(spanTagListText);
                         reviewDetail.setRegDate(LocalDate.now());
                         reviewDetail.setReview(review);
+                        reviewDetail.setUrl(url);
                         reviewDetailList.add(reviewDetail);
                     }
                     // 새 창 닫기
