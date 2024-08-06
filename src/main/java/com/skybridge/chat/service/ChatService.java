@@ -81,7 +81,7 @@ public class ChatService {
             List<ChatLink> chatLinks = new ArrayList<>();
             chatRes.setContent("링크 테스트 입니다.");
             ChatLink chatLink = new ChatLink();
-            chatLink.setImage(domain + "/file/file/ebs2");
+            chatLink.setImage(domain + "/file/file/ebs_min");
             chatLink.setTitle("ebsi.co.kr");
             chatLink.setType("L");
             chatLink.setUrl("https://www.ebsi.co.kr/ebs/pot/poti/main.ebs");
