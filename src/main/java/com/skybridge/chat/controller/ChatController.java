@@ -1,5 +1,6 @@
 package com.skybridge.chat.controller;
 
+import com.skybridge.chat.dto.ChatRes;
 import com.skybridge.chat.service.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,6 +31,12 @@ public class ChatController {
     @Operation(summary = "질문", description = "질문")
     public ResponseEntity<Flux<String>> chat(@Schema(description = "content", example = "고려대학교 입시요강 알려줘", name = "content") @PathVariable("content")  String content) {
         return chatService.chat(content);
+    }
+
+    @GetMapping(value = "/test/{content}")
+    @Operation(summary = "질문", description = "질문")
+    public ResponseEntity<ChatRes> test(@Schema(description = "content", example = "고려대학교 입시요강 알려줘", name = "content") @PathVariable("content")  String content) {
+        return chatService.test(content);
     }
 
 }

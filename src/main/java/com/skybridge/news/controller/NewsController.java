@@ -30,7 +30,6 @@ public class NewsController {
     }
 
     @GetMapping("/image/{id}")
-
     @Operation(summary = "뉴스 이미지 조회", description = "이미지 조회")
     public ResponseEntity<Resource>  loadImage(@PathVariable("id") String id) {
         return newsService.loadImage(id);
