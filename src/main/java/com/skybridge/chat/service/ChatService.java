@@ -96,9 +96,9 @@ public class ChatService {
 
             ChatLink chatLink3 = new ChatLink();
             chatLink3.setImage(domain + "file/file/pdf");
-            chatLink3.setTitle("고려대학교 2025 입시요강");
-            chatLink3.setType("L");
-            chatLink3.setUrl("https://www.megastudy.net/");
+            chatLink3.setTitle("대학교 목록");
+            chatLink3.setType("F");
+            chatLink3.setUrl(domain + "file/file/university");
             chatLinks.add(chatLink3);
 
             chatRes.setLinkList(chatLinks);
