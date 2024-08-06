@@ -70,7 +70,7 @@ public class ChatService {
         if (StringUtils.equals(content, "1")) {
             chatRes.setContent("카드 테스트 입니다.");
             ChatCard chatCard = new ChatCard();
-            chatCard.setImage(domain + "/file/file/ebs");
+            chatCard.setImage(domain + "file/file/ebs");
             chatCard.setTitle("[2024 수능특강] 최서희의 문학");
             chatCard.setSubject("국어영역 | 문학");
             chatCard.setTeacher("최서희");
@@ -81,21 +81,21 @@ public class ChatService {
             List<ChatLink> chatLinks = new ArrayList<>();
             chatRes.setContent("링크 테스트 입니다.");
             ChatLink chatLink = new ChatLink();
-            chatLink.setImage(domain + "/file/file/ebs_min");
+            chatLink.setImage(domain + "file/file/ebs_min");
             chatLink.setTitle("ebsi.co.kr");
             chatLink.setType("L");
             chatLink.setUrl("https://www.ebsi.co.kr/ebs/pot/poti/main.ebs");
             chatLinks.add(chatLink);
 
             ChatLink chatLink2 = new ChatLink();
-            chatLink2.setImage(domain + "/file/file/mega");
+            chatLink2.setImage(domain + "file/file/mega");
             chatLink2.setTitle("megastudy.net");
             chatLink2.setType("L");
             chatLink2.setUrl("https://www.megastudy.net/");
             chatLinks.add(chatLink2);
 
             ChatLink chatLink3 = new ChatLink();
-            chatLink3.setImage(domain + "/file/file/pdf");
+            chatLink3.setImage(domain + "file/file/pdf");
             chatLink3.setTitle("고려대학교 2025 입시요강");
             chatLink3.setType("L");
             chatLink3.setUrl("https://www.megastudy.net/");
