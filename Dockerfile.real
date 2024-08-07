@@ -1,33 +1,25 @@
-FROM openjdk:17-jdk
+FROM oraclelinux:8
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
 # Install necessary dependencies for Playwright using yum
 # 패키지 관리 도구 및 필요한 도구 설치
-RUN  curl -O https://yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/getPackage/python3-dnf-4.0.9.2-5.el8.noarch.rpm \
-     && curl -O  https://yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/getPackage/systemd-239-13.0.1.el8.x86_64.rpm \
-     && curl -O https://yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/getPackage/dnf-4.0.9.2-5.el8.noarch.rpm \
-     && rpm -ivh python3-dnf-4.0.9.2-5.el8.noarch.rpm \
-    && rpm -ivh systemd-239-13.0.1.el8.x86_64.rpm \
-    && rpm -ivh dnf-4.0.9.2-5.el8.noarch.rpm \
-    # 업데이트 후 필요한 패키지 설치
-    && dnf install -y \
-        libnss3 \
-        libatk \
-        cups-libs \
-        libXcomposite \
-        libXdamage \
-        libXext \
-        libXfixes \
-        libXrandr \
-        libXrender \
-        libXtst \
-        pango \
-        cairo \
-        alsa-lib \
-    # 캐시 정리로 이미지 크기 줄이기
-    && dnf clean all \
-    # 필요 없는 파일 제거
-    && rm -rf /var/lib/apt/lists/* python3-dnf-*.rpm systemd-*.rpm dnf-*.rpm
+RUN yum update -y && yum install -y \
+    nss \
+    atk \
+    cups-libs \
+    libXcomposite \
+    libXdamage \
+    libXext \
+    libXfixes \
+    libXrandr \
+    libXrender \
+    libXtst \
+    pango \
+    cairo \
+    alsa-lib \
+    # 불필요한 파일 삭제로 이미지 크기 줄이기
+    && yum clean all \
 
+RUN yum install -y java-17-openjdk
 ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
