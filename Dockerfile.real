@@ -2,7 +2,8 @@ FROM openjdk:17-jdk
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
-RUN dnf install -y \
+# Install necessary dependencies for Playwright using yum
+RUN yum install -y \
     nss \
     atk \
     cups-libs \
@@ -17,5 +18,6 @@ RUN dnf install -y \
     cairo \
     alsa-lib \
     # Clean up
-    && dnf clean all
+    && yum clean all \
+
 ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
