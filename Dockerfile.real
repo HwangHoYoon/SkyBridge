@@ -2,4 +2,20 @@ FROM openjdk:17-jdk
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
+RUN dnf install -y \
+    nss \
+    atk \
+    cups-libs \
+    libXcomposite \
+    libXdamage \
+    libXext \
+    libXfixes \
+    libXrandr \
+    libXrender \
+    libXtst \
+    pango \
+    cairo \
+    alsa-lib \
+    # Clean up
+    && dnf clean all
 ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
