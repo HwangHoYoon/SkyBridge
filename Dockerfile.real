@@ -19,7 +19,7 @@ RUN yum update -y && yum install -y \
     cairo \
     alsa-lib \
     # 불필요한 파일 삭제로 이미지 크기 줄이기
-    && yum clean all \
+    && yum clean all
 
 RUN yum install -y java-17-openjdk
 ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
