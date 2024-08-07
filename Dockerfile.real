@@ -4,8 +4,7 @@ COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
 # Install necessary dependencies for Playwright using yum
 # 패키지 관리 도구 및 필요한 도구 설치
-RUN yum install -y wget rpm \
-    && wget https://download.oracle.com/otn-pub/linux/ol8/latest/x86_64/Packages/dnf-*.rpm \
+RUN  wget https://download.oracle.com/otn-pub/linux/ol8/latest/x86_64/Packages/dnf-*.rpm \
     && rpm -ivh dnf-*.rpm \
     # 업데이트 후 필요한 패키지 설치
     && dnf install -y \
