@@ -40,4 +40,9 @@ public class AdmNew {
     @Column(name = "reg_date", nullable = false)
     private LocalDate regDate;
 
+    @Column(name = "bat_date")
+    private LocalDate batDate;
+
+    @Column(name = "code", length = Integer.MAX_VALUE)
+    private String code;
 }
