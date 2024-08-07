@@ -5,7 +5,7 @@ ENV TZ Asia/Seoul
 # Install necessary dependencies for Playwright using yum
 # 패키지 관리 도구 및 필요한 도구 설치
 RUN  curl -O https://download.oracle.com/otn-pub/linux/ol8/latest/x86_64/Packages/dnf-4.6.0-1.el8.noarch.rpm \
-    && rpm -ivh dnf-*.rpm \
+    && rpm -ivh dnf-4.6.0-1.el8.noarch.rpm \
     # 업데이트 후 필요한 패키지 설치
     && dnf install -y \
         libnss3 \
