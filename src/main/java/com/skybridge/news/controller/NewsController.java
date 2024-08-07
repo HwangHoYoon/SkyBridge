@@ -36,10 +36,10 @@ public class NewsController {
         return newsService.loadImage(id);
     }
 
-    @Scheduled(cron = "0 00 05 * * ?")
+/*    @Scheduled(cron = "0 57 07 * * ?")
     public void runTask() throws Exception {
         log.info("NewsService Scheduled start");
         newsService.newsScheduled();
         log.info("NewsService Scheduled end");
-    }
+    }*/
 }

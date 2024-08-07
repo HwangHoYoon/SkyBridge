@@ -1,27 +1,5 @@
-FROM oraclelinux:8
+FROM openjdk:17-jdk
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
-# Install necessary dependencies for Playwright using yum
-# 패키지 관리 도구 및 필요한 도구 설치
-RUN yum update -y && yum install -y \
-    nss \
-    atk \
-    cups-libs \
-    libXcomposite \
-    libXdamage \
-    libXext \
-    libXfixes \
-    libXrandr \
-    libXrender \
-    libXtst \
-    pango \
-    cairo \
-    alsa-lib \
-    libdrm  \
-    libgbm  \
-    # 불필요한 파일 삭제로 이미지 크기 줄이기
-    && yum clean all
-
-RUN yum install -y java-17-openjdk
 ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
