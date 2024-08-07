@@ -18,8 +18,8 @@ RUN yum update -y && yum install -y \
     pango \
     cairo \
     alsa-lib \
-    libdrm2  \
-    libgbm1  \
+    libdrm  \
+    libgbm  \
     # 불필요한 파일 삭제로 이미지 크기 줄이기
     && yum clean all
 
