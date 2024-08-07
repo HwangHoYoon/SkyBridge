@@ -3,21 +3,28 @@ ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
 # Install necessary dependencies for Playwright using yum
-RUN yum install -y \
-    nss \
-    atk \
-    cups-libs \
-    libXcomposite \
-    libXdamage \
-    libXext \
-    libXfixes \
-    libXrandr \
-    libXrender \
-    libXtst \
-    pango \
-    cairo \
-    alsa-lib \
-    # Clean up
-    && yum clean all \
+# 패키지 관리 도구 및 필요한 도구 설치
+RUN yum install -y wget rpm \
+    && wget https://download.oracle.com/otn-pub/linux/ol8/latest/x86_64/Packages/dnf-*.rpm \
+    && rpm -ivh dnf-*.rpm \
+    # 업데이트 후 필요한 패키지 설치
+    && dnf install -y \
+        libnss3 \
+        libatk \
+        cups-libs \
+        libXcomposite \
+        libXdamage \
+        libXext \
+        libXfixes \
+        libXrandr \
+        libXrender \
+        libXtst \
+        pango \
+        cairo \
+        alsa-lib \
+    # 캐시 정리로 이미지 크기 줄이기
+    && dnf clean all \
+    # 필요 없는 파일 제거
+    && rm -rf /var/lib/apt/lists/* dnf-*.rpm
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
