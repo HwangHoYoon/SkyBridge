@@ -30,4 +30,7 @@ public class File {
     @Column(name = "key", length = Integer.MAX_VALUE)
     private String key;
 
+    @Column(name = "type", length = Integer.MAX_VALUE)
+    private String type;
+
 }

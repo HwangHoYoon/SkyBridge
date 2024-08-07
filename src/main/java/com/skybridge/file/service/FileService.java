@@ -36,7 +36,12 @@ public class FileService {
         Path filePath = null;
         try {
             filePath = Paths.get(fileName);
-            header.add("Content-type", Files.probeContentType(filePath));
+            String type = admNew.getType();
+            if (StringUtils.equals("I", type)) {
+                header.add("Content-type", Files.probeContentType(filePath));
+            } else {
+                header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"");
+            }
         } catch(IOException e) {
             log.error("파일을 불러오는대 실패하였습니다. {}", fileName);
         }
