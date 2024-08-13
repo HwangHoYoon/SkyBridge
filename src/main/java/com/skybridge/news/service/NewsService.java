@@ -129,7 +129,7 @@ public class NewsService {
         try (Playwright playwright = Playwright.create()) {
             // 브라우저 런처 생성
             BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
-            options.setHeadless(false);  // 브라우저가 보이도록 설정
+            options.setHeadless(true);  // 브라우저가 보이도록 설정
 
             // 브라우저 시작 (Chromium, Firefox, WebKit 중 선택)
             Browser browser = playwright.chromium().launch(options);
