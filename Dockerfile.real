@@ -1,6 +1,6 @@
-FROM openjdk:17-jdk
+FROM mcr.microsoft.com/playwright/java:v1.35.0-jammy-amd64
 RUN mkdir -p /tmp && chmod 777 /tmp
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} SkyBridge-0.0.1-SNAPSHOT.jar
 ENV TZ Asia/Seoul
-ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=real", "-Dfile.encoding=UTF-8", "-jar","/SkyBridge-0.0.1-SNAPSHOT.jar"]
