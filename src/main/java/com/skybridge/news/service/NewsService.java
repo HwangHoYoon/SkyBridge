@@ -176,7 +176,7 @@ public class NewsService {
                     if (tdSpanText != null) {
                         tdSpanText = tdSpanText.replace("[", "").replace("]", "");
 
-                        if (tdSpanText.equals("수시") || tdSpanText.equals("정시")) {
+                        //if (tdSpanText.equals("수시") || tdSpanText.equals("정시")) {
                             admNew.setNewsType(tdSpanText);
 
                             ElementHandle tdA = liElement.querySelector(".td_lft > a");
@@ -233,7 +233,7 @@ public class NewsService {
                                     newPage.close();
                                 }
                             }
-                        }
+                        //}
                     }
                 }
                 totCnt++;
@@ -270,7 +270,7 @@ public class NewsService {
 
             String folderPath = makeFolder();
 
-            String fileName = uploadPath + File.separator + folderPath + destinationFile;
+            String fileName = uploadPath + folderPath + destinationFile;
             // URL에서 파일로 복사
             Files.copy(url.openStream(), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
 
