@@ -52,6 +52,7 @@ public class SkyController {
     @GetMapping("/image/{id}")
     @Operation(summary = "선생님 이미지 조회", description = "선생님 이미지 조회")
     public ResponseEntity<Resource>  loadImage(@PathVariable("id") String id) {
+        
         return skyService.loadImage(id);
     }
 
