@@ -12,10 +12,6 @@
 <img src="https://github.com/HwangHoYoon/ChwipoClova_BE/blob/develop/src/test/java/com/chwipoClova/etc/skyMain.png">
 </div>
 스카이브릿지는 목표 대학과 수험생의 꿈을이어주는 AI 입시 컨설팅 서비스입니다.<br>
-▶️ [스카이브릿 바로가기](https://www.skybrg.io/)
-
-## 🗂️ APIs
-👉🏻 [API 바로보기](https://api.skybrg.io/api-docs)
 
 <br />
 
